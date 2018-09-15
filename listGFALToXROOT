@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# FILE=/user/paolocms/...
+
+export FILE=$1
+
+export HEAD="srm://t2-srm-02.lnl.infn.it////pnfs/lnl.infn.it/data/cms/store"
+#export SKIP=`echo ${HEAD} | awk -F/ '{print NF}'`
+#echo $SKIP
+export HXRD="root://xrootd-cms.infn.it//store"
+gfal-ls ${HEAD}${FILE} | awk -v HXRD=${HXRD} -v FILE=${FILE} '{print HXRD""FILE"/"$0}'
+# | awk 
+
+#awk -F/ '{for(i=7;i<NF;++i)printf("/"$i); print " "$NF}' ${FILE} | awk '{print "mkdir -p /lustre/cmswork/ronchese/store"$1" ; gfal-copy srm://t2-srm-02.lnl.infn.it////pnfs/lnl.infn.it/data/cms/store"$1"/"$2" file:/lustre/cmswork/ronchese/store"$1"/"$2" ;"}'
+
